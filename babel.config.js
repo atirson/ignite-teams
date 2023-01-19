@@ -20,7 +20,6 @@ module.exports = function(api) {
             "@constants": "./src/constants",
             "@styles": "./src/styles",
             "@types": "./src/types",
-            "@theme": "./src/theme",
             "@storage": "./src/storage",
           }
        }
