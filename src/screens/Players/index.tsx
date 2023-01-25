@@ -4,6 +4,7 @@ import { Highlight } from "@components/Highlight";
 import { ButtonIcon } from "@components/ButtonIcon";
 
 import { Container, Form } from "./styles";
+import { Filter } from "@components/Filter";
 
 export const Players = () => {
   return (
@@ -21,6 +22,11 @@ export const Players = () => {
         />
         <ButtonIcon icon="add" />
       </Form>
+
+      <Filter 
+        title="Time A"
+        isActive
+      />
       
     </Container>
   )
