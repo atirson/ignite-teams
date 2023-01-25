@@ -6,12 +6,17 @@ import { Container } from './styles';
 import { FlatList } from 'react-native';
 import { EmptyList } from '@components/EmptyList';
 import { Button } from '@components/Button';
+import { useNavigation } from '@react-navigation/native';
 
 
 export function Groups() {
   const [groups, setGroups] = useState<string[]>(['Galera da Rocketseat', 'Turma Ignite', 'Turma React Native']);
 
+  const navigation = useNavigation()
 
+  const handleNewGroup = () => { 
+    navigation.navigate('new')
+  }
   return (
     <Container>
       <Header />
@@ -31,7 +36,10 @@ export function Groups() {
         )}
       />
 
-      <Button title='Criar nova turma' />
+      <Button 
+        title='Criar nova turma'
+        onPress={handleNewGroup} 
+      />
 
     </Container>
   );
