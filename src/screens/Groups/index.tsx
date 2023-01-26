@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { GroupCard } from '@components/GroupCard';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
@@ -6,17 +6,32 @@ import { Container } from './styles';
 import { FlatList } from 'react-native';
 import { EmptyList } from '@components/EmptyList';
 import { Button } from '@components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { groupsGetAll } from '@storage/group/groupsGetAll';
 
 
 export function Groups() {
-  const [groups, setGroups] = useState<string[]>(['Galera da Rocketseat', 'Turma Ignite', 'Turma React Native']);
+  const [groups, setGroups] = useState<string[]>([]);
 
   const navigation = useNavigation()
 
   const handleNewGroup = () => { 
     navigation.navigate('new')
   }
+
+  const fecthGroups = async () => {
+    try {
+      const groups = await groupsGetAll()
+      setGroups(groups)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useFocusEffect(useCallback(() => {
+    fecthGroups()
+  }, [groups]))
+
   return (
     <Container>
       <Header />
@@ -44,4 +59,3 @@ export function Groups() {
     </Container>
   );
 }
-
