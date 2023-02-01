@@ -6,6 +6,8 @@ import { Input } from '@components/Input'
 import { useNavigation } from '@react-navigation/native'
 import { Container, Content, Icon } from './styles'
 import { groupCreate } from '@storage/group/groupCreate'
+import { AppError } from '@utils/AppError'
+import { Alert } from 'react-native'
 
 export function NewGroup() {
   const [group, setGroup] = useState<string>('')
@@ -13,10 +15,17 @@ export function NewGroup() {
 
   const handleNew = async () => {
     try {
+      if (group.trim().length === 0) return Alert.alert('Novo Grupo', 'O nome da turma não pode ser vazio')
+
       await groupCreate(group)
       navigation.navigate('players', {  group })
     } catch (error) {
-      console.log(error)
+      if (error instanceof AppError) {
+        return Alert.alert('Novo Grupo', error.message)
+      } else {
+        console.log(error)
+        return Alert.alert('Novo Grupo', 'Ocorreu um erro inesperado')
+      }
     }
   }
 
